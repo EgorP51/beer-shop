@@ -1,14 +1,13 @@
-import 'package:craft_store/screens/main_screen.dart';
-import 'package:craft_store/screens/registration_screen.dart';
 import 'package:craft_store/widgets/input_text.dart';
-import 'package:craft_store/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegistrationScreen extends StatelessWidget {
 
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _userFormKey = GlobalKey<FormState>();
   final _emailFormKey = GlobalKey<FormState>();
   final _passwordFormKey = GlobalKey<FormState>();
 
@@ -22,7 +21,7 @@ class LoginScreen extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage(
                       'assets/images/background/backgroundimage_loginpage.jpg'),
-                fit: BoxFit.cover
+                  fit: BoxFit.cover
               )
           ),
         ),
@@ -30,9 +29,7 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Container(
             alignment: Alignment.topCenter,
-            padding: const EdgeInsets.only(
-              top: 50
-            ),
+            padding: const EdgeInsets.only(top: 50),
             child: Container(
               padding: const EdgeInsets.all(15),
               height: 400,
@@ -40,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.orange,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: Border.all(color: Colors.yellow,width: 2),
+                border: Border.all(color: Colors.yellow, width: 2),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.yellow.withOpacity(0.5),
@@ -53,11 +50,12 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Logo(),
+
+                  InputText(_usernameController, 'Enter your username', const Icon(Icons.supervised_user_circle), false,Validation.username,_userFormKey),
                   InputText(_emailController, 'Enter email', const Icon(Icons.email_outlined), false,Validation.email,_emailFormKey),
                   InputText(_passwordController, 'Enter password', const Icon(Icons.password_outlined), true,Validation.password,_passwordFormKey),
-                  _goToRegistration(context),
-                  _submitButton(context)
+                  const SizedBox(height: 30,),
+                  _returnButton(context)
                 ],
               ),
             ),
@@ -67,43 +65,25 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _submitButton(BuildContext context) {
+
+  Widget _returnButton(BuildContext context){
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size.fromHeight(40),
         backgroundColor: const Color(0xFFF77103),
       ),
-      child: Text('sign in',
-          style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 20)),
+      child: Text('return to login screen',
+          style: GoogleFonts.comfortaa(
+              color: Colors.white, fontSize: 20)),
       onPressed: () {
+        final isValidUsername = _userFormKey.currentState!.validate();
         final isValidEmail = _emailFormKey.currentState!.validate();
         final isValidPassword = _passwordFormKey.currentState!.validate();
 
-        if(isValidEmail && isValidPassword){
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MainScreen(_emailController.text,_passwordController.text),
-            ),
-          );
-          _emailController.clear();
-          _passwordController.clear();
+        if(isValidUsername && isValidEmail && isValidPassword) {
+          Navigator.of(context).pop();
         }
-      }
-    );
-  }
-
-  Widget _goToRegistration(BuildContext context){
-    return GestureDetector(
-        onTap: (){
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => RegistrationScreen(),
-            ),
-          );
-        },
-        child: Text("Don't have an account? Register now!",
-          style: GoogleFonts.comfortaa(color: Colors.black54, fontSize: 15,fontWeight: FontWeight.w800),)
+      },
     );
   }
 }
-
