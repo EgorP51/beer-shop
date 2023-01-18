@@ -54,8 +54,22 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Logo(),
-                  InputText(_emailController, 'Enter email', const Icon(Icons.email_outlined), false,Validation.email,_emailFormKey),
-                  InputText(_passwordController, 'Enter password', const Icon(Icons.password_outlined), true,Validation.password,_passwordFormKey),
+                  InputText(
+                      controller: _emailController,
+                      hintText: 'Enter email',
+                      icon: const Icon(Icons.email_outlined),
+                      obscure: false,
+                      validation: Validation.email,
+                      formKey: _emailFormKey
+                  ),
+                  InputText(
+                      controller: _passwordController,
+                      hintText: 'Enter password',
+                      icon: const Icon(Icons.password_outlined),
+                      obscure: true,
+                      validation: Validation.password,
+                      formKey: _passwordFormKey
+                  ),
                   _goToRegistration(context),
                   _submitButton(context)
                 ],
@@ -80,14 +94,16 @@ class LoginScreen extends StatelessWidget {
         final isValidPassword = _passwordFormKey.currentState!.validate();
 
         if(isValidEmail && isValidPassword){
+          var email = _emailController.text;
+          var password = _passwordController.text;
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => MainScreen(_emailController.text,_passwordController.text),
+              builder: (context) => MainScreen(email,password),
             ),
           );
-          _emailController.clear();
-          _passwordController.clear();
         }
+        _emailController.clear();
+        _passwordController.clear();
       }
     );
   }

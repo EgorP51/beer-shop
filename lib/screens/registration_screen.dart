@@ -50,10 +50,30 @@ class RegistrationScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
-                  InputText(_usernameController, 'Enter your username', const Icon(Icons.supervised_user_circle), false,Validation.username,_userFormKey),
-                  InputText(_emailController, 'Enter email', const Icon(Icons.email_outlined), false,Validation.email,_emailFormKey),
-                  InputText(_passwordController, 'Enter password', const Icon(Icons.password_outlined), true,Validation.password,_passwordFormKey),
+                  InputText(
+                      controller: _usernameController,
+                      hintText: 'username',
+                      icon: const Icon(Icons.supervised_user_circle_outlined),
+                      obscure: false,
+                      validation: Validation.username,
+                      formKey: _userFormKey
+                  ),
+                  InputText(
+                      controller: _emailController,
+                      hintText: 'Enter email',
+                      icon: const Icon(Icons.email_outlined),
+                      obscure: false,
+                      validation: Validation.email,
+                      formKey: _emailFormKey
+                  ),
+                  InputText(
+                      controller: _passwordController,
+                      hintText: 'Enter password',
+                      icon: const Icon(Icons.password_outlined),
+                      obscure: false,
+                      validation: Validation.password,
+                      formKey: _passwordFormKey
+                  ),
                   const SizedBox(height: 30,),
                   _returnButton(context)
                 ],
