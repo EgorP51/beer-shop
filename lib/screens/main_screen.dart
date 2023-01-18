@@ -1,14 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget{
-
-  late final _email;
-  late final _password;
-
-  MainScreen(this._email,this._password);
-
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text('main screen'),
@@ -18,13 +14,15 @@ class MainScreen extends StatelessWidget{
       body: Center(
         child: Column(
           children: [
-            Text('email: ' + _email),
-            Text('password: ' + _password)
+            Text('email: ${user!.email!}'),
+            ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Text('sign out'))
           ],
         ),
       ),
-
     );
   }
-
 }

@@ -1,9 +1,12 @@
+import 'package:craft_store/utilities/utils.dart';
 import 'package:craft_store/widgets/input_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RegistrationScreen extends StatelessWidget {
+import '../main.dart';
 
+class RegistrationScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,9 +24,7 @@ class RegistrationScreen extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage(
                       'assets/images/background/backgroundimage_loginpage.jpg'),
-                  fit: BoxFit.cover
-              )
-          ),
+                  fit: BoxFit.cover)),
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
@@ -56,25 +57,24 @@ class RegistrationScreen extends StatelessWidget {
                       icon: const Icon(Icons.supervised_user_circle_outlined),
                       obscure: false,
                       validation: Validation.username,
-                      formKey: _userFormKey
-                  ),
+                      formKey: _userFormKey),
                   InputText(
                       controller: _emailController,
                       hintText: 'Enter email',
                       icon: const Icon(Icons.email_outlined),
                       obscure: false,
                       validation: Validation.email,
-                      formKey: _emailFormKey
-                  ),
+                      formKey: _emailFormKey),
                   InputText(
                       controller: _passwordController,
                       hintText: 'Enter password',
                       icon: const Icon(Icons.password_outlined),
                       obscure: false,
                       validation: Validation.password,
-                      formKey: _passwordFormKey
+                      formKey: _passwordFormKey),
+                  const SizedBox(
+                    height: 30,
                   ),
-                  const SizedBox(height: 30,),
                   _returnButton(context)
                 ],
               ),
@@ -85,25 +85,50 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-
-  Widget _returnButton(BuildContext context){
+  Widget _returnButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size.fromHeight(40),
         backgroundColor: const Color(0xFFF77103),
       ),
       child: Text('return to login screen',
-          style: GoogleFonts.comfortaa(
-              color: Colors.white, fontSize: 20)),
+          style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 20)),
       onPressed: () {
         final isValidUsername = _userFormKey.currentState!.validate();
         final isValidEmail = _emailFormKey.currentState!.validate();
         final isValidPassword = _passwordFormKey.currentState!.validate();
 
-        if(isValidUsername && isValidEmail && isValidPassword) {
-          Navigator.of(context).pop();
+        if (isValidUsername && isValidEmail && isValidPassword) {
+          var username = _usernameController.text.trim();
+          var email = _emailController.text.trim();
+          var password = _passwordController.text.trim();
+
+          _singUp(context, username, email, password);
         }
       },
     );
+  }
+
+  Future _singUp(BuildContext context, String username, String email,
+      String password) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Colors.orange,
+          ));
+        });
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Utils.showSnackBar(e.message);
+    }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
