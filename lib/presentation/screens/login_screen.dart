@@ -1,13 +1,15 @@
 import 'package:craft_store/main.dart';
-import 'package:craft_store/screens/registration_screen.dart';
-import 'package:craft_store/utilities/utils.dart';
-import 'package:craft_store/widgets/input_text.dart';
-import 'package:craft_store/widgets/logo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:craft_store/presentation/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../services/firebase_authorization.dart';
+import '../widgets/input_text.dart';
+import '../widgets/logo.dart';
+
+
 class LoginScreen extends StatelessWidget {
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _emailFormKey = GlobalKey<FormState>();
@@ -91,32 +93,19 @@ class LoginScreen extends StatelessWidget {
           if (isValidEmail && isValidPassword) {
             var email = _emailController.text.trim();
             var password = _passwordController.text.trim();
-
-            _signIn(context, email, password);
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ));
+                });
+            FirebaseAuthorization.signIn(email, password);
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
           }
-          //_emailController.dispose();
-          //_passwordController.dispose();
         });
-  }
-
-  Future _signIn(BuildContext context, String email, String password) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: Colors.orange,
-          ));
-        });
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      Utils.showSnackBar(e.message);
-    }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   Widget _goToRegistration(BuildContext context) {
