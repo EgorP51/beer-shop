@@ -3,10 +3,15 @@ import 'package:craft_store/widgets/input_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../main.dart';
 
+// todo: add photo
+//https://st2.depositphotos.com/4323461/11559/v/450/depositphotos_115594724-stock-illustration-young-blond-woman-pours-a.jpg - 1
+//https://as1.ftcdn.net/v2/jpg/01/69/43/90/1000_F_169439053_CcPE095wGFAxnQwVxDGwC0sURdOhMiPP.jpg - 2
+//https://img.freepik.com/premium-vector/cute-cartoon-alien-with-beer_634248-334.jpg - 3
+
 class RegistrationScreen extends StatelessWidget {
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -109,8 +114,7 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-  Future _singUp(BuildContext context, String username, String email,
-      String password) async {
+  Future _singUp(BuildContext context, String username, String email, String password) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -121,10 +125,13 @@ class RegistrationScreen extends StatelessWidget {
           ));
         });
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      User? user = result.user;
+      user?.updateDisplayName(username);
+      user?.updatePhotoURL('https://ih1.redbubble.net/image.2702052291.4780/st,small,845x845-pad,1000x1000,f8f8f8.jpg');
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

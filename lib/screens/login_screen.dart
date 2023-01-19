@@ -129,7 +129,7 @@ class LoginScreen extends StatelessWidget {
           );
         },
         child: Text(
-          "Don't have an account? Register now!",
+          "No account? Sign up!",
           style: GoogleFonts.comfortaa(
               color: Colors.black54, fontSize: 15, fontWeight: FontWeight.w800),
         ));
