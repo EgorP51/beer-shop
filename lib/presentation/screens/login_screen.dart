@@ -3,7 +3,7 @@ import 'package:craft_store/presentation/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../services/firebase_authorization.dart';
+import '../../data/services/firebase_authorization.dart';
 import '../widgets/input_text.dart';
 import '../widgets/logo.dart';
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../main.dart';
-import '../../services/firebase_authorization.dart';
+import '../../data/services/firebase_authorization.dart';
 import '../widgets/input_text.dart';
 import 'login_screen.dart';
 
@@ -132,7 +131,7 @@ class RegistrationScreen extends StatelessWidget {
                     ));
               });
           FirebaseAuthorization.signUp(email, password, username);
-          navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        //  navigatorKey.currentState!.popUntil((route) => route.isFirst);
         }
       },
     );

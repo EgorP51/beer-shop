@@ -1,7 +1,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../utilities/utils.dart';
+import '../../utilities/utils.dart';
+
 
 class FirebaseAuthorization{
 
@@ -30,6 +31,4 @@ class FirebaseAuthorization{
   }
 
   static signOut() async => await FirebaseAuth.instance.signOut();
-
-
 }
