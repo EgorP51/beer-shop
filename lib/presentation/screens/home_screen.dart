@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/models/beer_model.dart';
 import '../../data/services/firebase_authorization.dart';
-import '../widgets/logo.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -15,56 +14,50 @@ class HomeScreen extends StatelessWidget {
       20,
       BeerModel(
           'https://firebasestorage.googleapis.com/v0/b/beer-shop-dfe80.appspot.com/o/pngwing.com(1).png?alt=media&token=646d67b7-fdfa-4bee-a904-3ce49ef2cc82',
-          '0.75', '5', 'light', 'FucksMan', '80', 'Test description', 'beer'));
+          '0.75',
+          '5',
+          'light',
+          'FucksMan',
+          '80',
+          'Test description',
+          'beer'));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('main screen'),
-          centerTitle: true,
-          backgroundColor: Colors.orange,
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                color: Colors.greenAccent,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.all(20),
-                  child: Logo(),
-                )
-              ),
-              _body(),
-            ],
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(
+              'F u c k s M a n',
+              style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 23),
+            ),
+            centerTitle: true,
+            expandedHeight: 200,
+            floating: true,
+            pinned: true,
+            backgroundColor: Colors.orange,
           ),
-        ),
-        drawer: _drawer(context));
+          _body()
+        ],
+      ),
+      drawer: _drawer(context),
+    );
   }
 
-  Widget _body(){
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 20
-        ),
-        child: GridView.builder(
-          itemCount: _tempBeerModels.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 12,
-              crossAxisCount: 2,
-              childAspectRatio: 0.85
-            ),
-            itemBuilder: (context,index) =>
-                CardItem(
-                img: _tempBeerModels[index].img,
-                name: _tempBeerModels[index].name,
-                price: _tempBeerModels[index].price,
-                alcoholContent: _tempBeerModels[index].alcoholContent)),
+  Widget _body() {
+    return SliverPadding(
+      padding: const EdgeInsetsDirectional.all(15),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+            (context, index) => CardItem(beerModel: _tempBeerModels[index]),
+            childCount: _tempBeerModels.length),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            crossAxisCount: 2,
+            childAspectRatio: 0.85),
       ),
     );
   }
@@ -142,4 +135,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

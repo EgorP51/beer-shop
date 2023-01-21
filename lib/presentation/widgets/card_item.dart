@@ -1,57 +1,60 @@
+import 'package:craft_store/data/models/beer_model.dart';
+import 'package:craft_store/presentation/screens/beer_screen.dart';
 import 'package:flutter/material.dart';
 
 class CardItem extends StatelessWidget {
-  final String img;
-  final String name;
-  final String price;
-  final String alcoholContent;
 
-  const CardItem({
-    required this.img,
-    required this.name,
-    required this.price,
-    required this.alcoholContent
+  final BeerModel beerModel;
+
+  CardItem({super.key,
+    required this.beerModel
   });
+
+  final List<Color> _colors = [
+    Colors.purpleAccent,
+    Colors.yellowAccent,
+    Colors.cyanAccent,
+    Colors.lightGreenAccent,
+    Colors.orangeAccent,
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 10
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.lightBlueAccent,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Stack(children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              img,
-              height: 150,
-            ),
-            Center(
-              child: Text(
-                name,
-                style: const TextStyle(fontSize: 25),
-              ),
-            )
-          ],
+    return InkWell(
+      onTap: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BeerScreen(beerModel: beerModel,),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 10
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: BoxDecoration(
+          color: (_colors..shuffle()).first,
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
+        ),
+        child: Stack(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('$price ₴',style: const TextStyle(fontSize: 30)),
-              Text('$alcoholContent %',style: const TextStyle(fontSize: 30)),
+              Image.network(
+                beerModel.img,
+                height: MediaQuery.of(context).size.height * 0.16,
+              ),
+              Center(
+                child: Text(
+                  beerModel.name,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              )
             ],
           ),
-        )
-      ]),
+        ]),
+      ),
     );
   }
 }
