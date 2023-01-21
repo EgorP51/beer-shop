@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "490885960971",
-    "project_id": "beer-shop-dfe80",
-    "storage_bucket": "beer-shop-dfe80.appspot.com"
+    "project_number": "724668860045",
+    "project_id": "craft-beer-shop",
+    "storage_bucket": "craft-beer-shop.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:490885960971:android:854d0605c015c1bd517e0e",
+        "mobilesdk_app_id": "1:724668860045:android:28f484aca9409522d7c4c4",
         "android_client_info": {
           "package_name": "com.example.craft_store"
         }
       },
       "oauth_client": [
         {
-          "client_id": "490885960971-lk044o7snfc24l7lpafl0296q09mjkpe.apps.googleusercontent.com",
+          "client_id": "724668860045-5cvabsq5ejfc9kh6qvhrd15hb3jnkgm3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZ4nIDsvRNbw2EhQT4xi4diTT-afoPod0"
+          "current_key": "AIzaSyAZOBcItRrb9PNHpIfrXm522zRGJge1CSk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "490885960971-lk044o7snfc24l7lpafl0296q09mjkpe.apps.googleusercontent.com",
+              "client_id": "724668860045-5cvabsq5ejfc9kh6qvhrd15hb3jnkgm3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

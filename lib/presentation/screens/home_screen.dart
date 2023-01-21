@@ -1,3 +1,4 @@
+import 'package:craft_store/data/database/database_operations.dart';
 import 'package:craft_store/presentation/widgets/card_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,38 +10,49 @@ import '../../data/services/firebase_authorization.dart';
 
 class HomeScreen extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser;
-
-  final List<BeerModel> _tempBeerModels = List.filled(
-      20,
-      BeerModel(
-          'https://firebasestorage.googleapis.com/v0/b/beer-shop-dfe80.appspot.com/o/pngwing.com(1).png?alt=media&token=646d67b7-fdfa-4bee-a904-3ce49ef2cc82',
-          '0.75',
-          '5',
-          'light',
-          'FucksMan',
-          '80',
-          'Test description',
-          'beer'));
+  late final List<BeerModel> _tempBeerModels;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: Text(
-              'F u c k s M a n',
-              style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 23),
-            ),
-            centerTitle: true,
-            expandedHeight: 200,
-            floating: true,
-            pinned: true,
-            backgroundColor: Colors.orange,
-          ),
-          _body()
-        ],
+      body: StreamBuilder<List<BeerModel>>(
+        stream: DatabaseOperations.readProductCollection(),
+        builder: (context,snapshot) {
+          if (snapshot.hasData) {
+            _tempBeerModels = snapshot.data!;
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  centerTitle: true,
+                  expandedHeight: 170,
+                  floating: true,
+                  pinned: true,
+                  backgroundColor: Colors.orange,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Text(
+                      'F u c k s M a n',
+                      style: GoogleFonts.comfortaa(
+                          color: Colors.white, fontSize: 27),
+                    ),
+                  ),
+                ),
+                _body()
+              ],
+            );
+          }
+          else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          else{
+            return const Center(
+              child:  CircularProgressIndicator(
+                color: Colors.amber,
+              ),
+            );
+          }
+        }
       ),
       drawer: _drawer(context),
     );
@@ -51,7 +63,7 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsetsDirectional.all(15),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
-            (context, index) => CardItem(beerModel: _tempBeerModels[index]),
+                (context, index) => CardItem(beerModel: _tempBeerModels[index]),
             childCount: _tempBeerModels.length),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             mainAxisSpacing: 20,

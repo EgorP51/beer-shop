@@ -1,3 +1,4 @@
+
 class BeerModel{
   final String img;
   final String volume;
@@ -17,4 +18,26 @@ class BeerModel{
       this.price,
       this.description,
       this.alcoholType);
+
+  Map<String, dynamic>? toJson() => {
+    'img': img,
+    'volume': volume,
+    'alcoholContent': alcoholContent,
+    'color': color,
+    'name': name,
+    'price': price,
+    'description': description,
+    'alcoholType': alcoholType
+  };
+
+  static BeerModel fromJson(Map<String,dynamic> json) => BeerModel(
+    json['img'],
+    json['volume'],
+    json['alcoholContent'],
+    json['color'],
+    json['name'],
+    json['price'],
+    json['description'],
+    json['alcoholType']
+  );
 }
