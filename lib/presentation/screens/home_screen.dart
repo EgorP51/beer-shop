@@ -6,39 +6,36 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/models/beer_model.dart';
 import '../../data/services/firebase_authorization.dart';
+import '../widgets/logo.dart';
 
 
 class HomeScreen extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser;
-  late final List<BeerModel> _tempBeerModels;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF3EBE3),
       body: StreamBuilder<List<BeerModel>>(
         stream: DatabaseOperations.readProductCollection(),
         builder: (context,snapshot) {
           if (snapshot.hasData) {
-            _tempBeerModels = snapshot.data!;
+            late final List<BeerModel> _tempBeerModels = snapshot.data!;
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  elevation: 0,
+                  iconTheme: const IconThemeData(color: Color(0xFFEB4531),size: 33),
                   centerTitle: true,
                   expandedHeight: 170,
-                  floating: true,
                   pinned: true,
-                  backgroundColor: Colors.orange,
+                  backgroundColor: const Color(0xFFF3EBE3),
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    title: Text(
-                      'F u c k s M a n',
-                      style: GoogleFonts.comfortaa(
-                          color: Colors.white, fontSize: 27),
+                    title: Logo(size: 50,color: const Color(0xFF212121),)
                     ),
                   ),
-                ),
-                _body()
+                _body(_tempBeerModels)
               ],
             );
           }
@@ -58,9 +55,9 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _body() {
+  Widget _body(List<BeerModel> _tempBeerModels) {
     return SliverPadding(
-      padding: const EdgeInsetsDirectional.all(15),
+      padding: const EdgeInsetsDirectional.all(20),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
                 (context, index) => CardItem(beerModel: _tempBeerModels[index]),
@@ -69,7 +66,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
             crossAxisCount: 2,
-            childAspectRatio: 0.85),
+            childAspectRatio: 0.74),
       ),
     );
   }

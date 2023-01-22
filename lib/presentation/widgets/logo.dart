@@ -3,16 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Logo extends StatelessWidget{
 
+  double size;
+  Color color;
+  Logo({required this.size, required this.color});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('FucksMan',
-            style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 50)),
-        Text("CRAFT BEER SHOP",
-            style: GoogleFonts.comfortaa(color: Colors.white70, fontSize: 20)),
-      ],
-    );
+    return Text(
+        'FucksMan',
+        style: GoogleFonts.grenzeGotisch(
+        color: color,
+    fontSize: size,
+    fontWeight: FontWeight.w500));
   }
 
 }

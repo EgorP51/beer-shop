@@ -1,6 +1,7 @@
 import 'package:craft_store/data/models/beer_model.dart';
 import 'package:craft_store/presentation/screens/beer_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CardItem extends StatelessWidget {
 
@@ -9,14 +10,6 @@ class CardItem extends StatelessWidget {
   CardItem({super.key,
     required this.beerModel
   });
-
-  final List<Color> _colors = [
-    Colors.purpleAccent,
-    Colors.yellowAccent,
-    Colors.cyanAccent,
-    Colors.lightGreenAccent,
-    Colors.orangeAccent,
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,32 +21,42 @@ class CardItem extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 10
-        ),
-        decoration: BoxDecoration(
-          color: (_colors..shuffle()).first,
-          borderRadius: const BorderRadius.all(Radius.circular(25)),
-        ),
-        child: Stack(children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.network(
-                beerModel.img,
-                height: MediaQuery.of(context).size.height * 0.16,
-              ),
-              Center(
-                child: Text(
-                  beerModel.name,
-                  style: const TextStyle(fontSize: 20),
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Center(
+            child: Column(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const CircleAvatar(
+                      backgroundColor: Color(0xFFEED9D4),
+                      radius: 75,
+                      child: CircleAvatar(
+                        backgroundColor: Color(0xFFE8CBC3),
+                        radius: 55,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xFFE7BEB6),
+                          radius: 35,
+                        ),
+                      ),
+                    ),
+                    Image.network(
+                      beerModel.img,
+                      height: 180,
+                    )
+                  ],
                 ),
-              )
-            ],
+                FittedBox(
+                    fit: BoxFit.fill,
+                    child: Text(beerModel.name,style: GoogleFonts.russoOne(
+                        color: const Color(0xFF212121),
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600),),
+                  ),
+              ],
+            ),
           ),
-        ]),
       ),
     );
   }

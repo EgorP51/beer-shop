@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Logo(),
+                  Logo(size: 50,color: Colors.white70,),
                   InputText(
                       controller: _emailController,
                       hintText: 'Enter email',
