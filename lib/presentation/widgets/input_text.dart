@@ -34,11 +34,14 @@ class InputText extends StatelessWidget {
       child: TextFormField(
         controller: _controller,
         obscureText: _obscure,
-        style: GoogleFonts.comfortaa(
-            color: Colors.white70, fontSize: 20, fontWeight: FontWeight.w900),
+        style: GoogleFonts.russoOne(
+            color: Color(0xBB212121), fontSize: 20, fontWeight: FontWeight.w900),
         decoration: InputDecoration(
             hintStyle:
-                GoogleFonts.comfortaa(color: Colors.white70, fontSize: 20),
+            GoogleFonts.russoOne(
+                fontSize: 22,
+                color: Color(0xBB212121),
+                fontWeight: FontWeight.w400),
             hintText: _hintText,
             prefixIcon: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
@@ -46,10 +49,10 @@ class InputText extends StatelessWidget {
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              borderSide: BorderSide(color: Color(0xFFF77103), width: 4),
+              borderSide: BorderSide(color: Color(0xFFEB4531), width: 4),
             ),
             enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0x9BF77103), width: 2),
+              borderSide: BorderSide(color: Color(0xD5EB4531), width: 2),
               borderRadius: BorderRadius.all(Radius.circular(5)),
             )),
         validator: (value) {

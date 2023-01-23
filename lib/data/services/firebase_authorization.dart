@@ -17,13 +17,13 @@ class FirebaseAuthorization{
 
   static signUp(String email, String password, String username) async{
     try {
-      UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       User? user = result.user;
       await user?.updateDisplayName(username);
-      await user?.updatePhotoURL('https://ih1.redbubble.net/image.2702052291.4780/st,small,845x845-pad,1000x1000,f8f8f8.jpg');
+      await user?.updatePhotoURL('https://i.pinimg.com/originals/73/9f/50/739f5047dd55a47d50dd5f27a11c0c29.jpg');
 
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);

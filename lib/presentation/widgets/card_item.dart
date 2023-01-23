@@ -21,9 +21,7 @@ class CardItem extends StatelessWidget {
           ),
         );
       },
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: Center(
+      child: Center(
             child: Column(
               children: [
                 Stack(
@@ -41,22 +39,24 @@ class CardItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Image.network(
-                      beerModel.img,
-                      height: 180,
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: Image.network(
+                        beerModel.img,
+                        height: 180,
+                      ),
                     )
                   ],
                 ),
                 FittedBox(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     child: Text(beerModel.name,style: GoogleFonts.russoOne(
                         color: const Color(0xFF212121),
                         fontSize: 30,
                         fontWeight: FontWeight.w600),),
                   ),
               ],
-            ),
-          ),
+            ), 
       ),
     );
   }

@@ -19,7 +19,7 @@ class BeerModel{
       this.description,
       this.alcoholType);
 
-  Map<String, dynamic>? toJson() => {
+  Map<String, dynamic> toJson() => {
     'img': img,
     'volume': volume,
     'alcoholContent': alcoholContent,

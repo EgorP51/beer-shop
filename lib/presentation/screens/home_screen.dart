@@ -66,41 +66,47 @@ class HomeScreen extends StatelessWidget {
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
             crossAxisCount: 2,
-            childAspectRatio: 0.74),
+            childAspectRatio: 0.7),
       ),
     );
   }
 
   Widget _drawer(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color(0xFFF3EBE3),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-              padding: const EdgeInsetsDirectional.only(top: 25),
-              height: 190,
+              padding: MediaQuery.of(context).padding,
+              height: 200,
               width: MediaQuery.of(context).size.width,
-              color: Colors.orange,
+              color: const Color(0xFF212121),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CircleAvatar(
-                    radius: 40.0,
-                    backgroundImage: NetworkImage(user?.photoURL ??
-                        'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=2000'),
-                    backgroundColor: Colors.transparent,
+                    radius: 45,
+                    backgroundColor: Color(0xFFEB4531),
+                    child: CircleAvatar(
+                      radius: 40.0,
+                      backgroundImage: NetworkImage(user?.photoURL ??
+                          'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=2000'),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                   Text(
                     user!.displayName ?? 'username == null',
-                    style: GoogleFonts.comfortaa(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800),
+                    style: GoogleFonts.russoOne(
+                        fontSize: 30,
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w600),
                   ),
                   Text(
                     user!.email!,
-                    style: GoogleFonts.comfortaa(
-                        color: Colors.white70, fontSize: 15),
+                    style: GoogleFonts.russoOne(
+                        fontSize: 15,
+                        color: Colors.white60,),
                   )
                 ],
               )),
@@ -118,20 +124,36 @@ class HomeScreen extends StatelessWidget {
           title: const Text('Settings'),
           onTap: () {},
         ),
+        const Divider(
+          color: Color(0xFF212121),
+          height: 20,
+        ),
         ListTile(
           leading: const Icon(Icons.app_registration_outlined),
           title: const Text('My orders'),
           onTap: () {},
+        ),
+        const Divider(
+          color: Color(0xFF212121),
+          height: 20,
         ),
         ListTile(
           leading: const Icon(Icons.shopping_cart),
           title: const Text('Shopping cart'),
           onTap: () {},
         ),
+        const Divider(
+          color: Color(0xFF212121),
+          height: 20,
+        ),
         ListTile(
           leading: const Icon(Icons.info),
           title: const Text('More about us'),
           onTap: () {},
+        ),
+        const Divider(
+          color: Color(0xFF212121),
+          height: 20,
         ),
         ListTile(
           leading: const Icon(Icons.output_outlined),
@@ -139,6 +161,10 @@ class HomeScreen extends StatelessWidget {
           onTap: () {
             FirebaseAuthorization.signOut();
           },
+        ),
+        const Divider(
+          color: Color(0xFF212121),
+          height: 20,
         ),
       ],
     );

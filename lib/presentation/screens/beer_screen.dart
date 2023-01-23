@@ -4,10 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/logo.dart';
 
+int bottleNumber = 1;
+
 class BeerScreen extends StatelessWidget {
   final BeerModel beerModel;
+  BeerScreen({super.key, required this.beerModel});
 
-  const BeerScreen({super.key, required this.beerModel});
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,16 @@ class BeerScreen extends StatelessWidget {
                     height: 30,
                   ),
                   _parameters(),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Counter(),
+                      _addToShoppingCartButton(),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -76,6 +88,19 @@ class BeerScreen extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget _addToShoppingCartButton() {
+    return Align(
+        alignment: Alignment.bottomRight,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(20,50),
+            backgroundColor: const Color(0xFFEB4531),
+          ),
+          onPressed: () {},
+          child: const Icon(Icons.shopping_cart),
+        ));
   }
 
   Widget _parameters() {
@@ -90,13 +115,19 @@ class BeerScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Volume',
-              style: style,
-            ),
-            Text(
-              '${beerModel.volume}L',
-              style: style,
+            Text('Volume', style: style,),
+            Text('${beerModel.volume}L', style: style,),
+          ],
+        ),
+        const Divider(
+          color: Colors.white70,
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Alcohol Content', style: style,),
+            Text("${beerModel.alcoholContent}%", style: style,
             ),
           ],
         ),
@@ -107,14 +138,9 @@ class BeerScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Alcohol Content',
-              style: style,
+            Text('Color', style: style,
             ),
-            Text(
-              "${beerModel.alcoholContent}%",
-              style: style,
-            ),
+            Text(beerModel.color, style: style,),
           ],
         ),
         const Divider(
@@ -124,19 +150,48 @@ class BeerScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Color',
-              style: style,
+            Text('Price', style: style,
             ),
-            Text(
-              beerModel.color,
-              style: style,
-            ),
+            Text('${beerModel.price}₴', style: style,),
           ],
         ),
         const Divider(
           color: Colors.white70,
           height: 20,
+        ),
+      ],
+    );
+  }
+}
+
+class Counter extends StatefulWidget{
+  @override
+  _CounterState createState() => _CounterState();
+
+}
+class _CounterState extends State<Counter>{
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        FloatingActionButton(
+          backgroundColor: Colors.white70,
+          onPressed: (){
+            setState(() {
+              if(bottleNumber > 1) bottleNumber--;
+            });
+          },
+          child: const Icon(Icons.arrow_back_ios_outlined,color: Colors.black87,),
+        ),
+        Text(' $bottleNumber ',style: const TextStyle(color: Colors.white,fontSize: 25),),
+        FloatingActionButton(
+          backgroundColor: Colors.white70,
+          onPressed: (){
+            setState(() {
+              bottleNumber ++;
+            });
+          },
+          child: const Icon(Icons.arrow_forward_ios_outlined,color: Colors.black87,),
         ),
       ],
     );

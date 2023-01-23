@@ -17,64 +17,54 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.topStart,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/background/backgroundimage_loginpage.jpg'),
-                  fit: BoxFit.cover)),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.only(top: 50),
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              height: 400,
-              width: 330,
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: Border.all(color: Colors.yellow, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.yellow.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
+    return Scaffold(
+      backgroundColor: const Color(0xFFF3EBE3),
+      body: Container(
+        alignment: Alignment.topCenter,
+        padding: const EdgeInsets.only(top: 100),
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          height: 400,
+          width: 330,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3EBE3),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 10,
+                offset: const Offset(0, 3),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Logo(size: 50,color: Colors.white70,),
-                  InputText(
-                      controller: _emailController,
-                      hintText: 'Enter email',
-                      icon: const Icon(Icons.email_outlined),
-                      obscure: false,
-                      validation: Validation.email,
-                      formKey: _emailFormKey),
-                  InputText(
-                      controller: _passwordController,
-                      hintText: 'Enter password',
-                      icon: const Icon(Icons.password_outlined),
-                      obscure: true,
-                      validation: Validation.password,
-                      formKey: _passwordFormKey),
-                  _goToRegistration(context),
-                  _signInButton(context)
-                ],
-              ),
-            ),
+            ],
           ),
-        )
-      ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Logo(
+                size: 60,
+                color: const Color(0xFF212121),
+              ),
+              InputText(
+                  controller: _emailController,
+                  hintText: 'Enter email',
+                  icon: const Icon(Icons.email_outlined),
+                  obscure: false,
+                  validation: Validation.email,
+                  formKey: _emailFormKey),
+              InputText(
+                  controller: _passwordController,
+                  hintText: 'Enter password',
+                  icon: const Icon(Icons.password_outlined),
+                  obscure: true,
+                  validation: Validation.password,
+                  formKey: _passwordFormKey),
+              _goToRegistration(context),
+              _signInButton(context)
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -82,10 +72,13 @@ class LoginScreen extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(40),
-          backgroundColor: const Color(0xFFF77103),
+          backgroundColor: const Color(0xFFEB4531),
         ),
         child: Text('sign in',
-            style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 20)),
+            style: GoogleFonts.russoOne(
+                fontSize: 25,
+                color: Colors.white,
+                fontWeight: FontWeight.w600)),
         onPressed: () {
           final isValidEmail = _emailFormKey.currentState!.validate();
           final isValidPassword = _passwordFormKey.currentState!.validate();
@@ -99,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
                   return const Center(
                       child: CircularProgressIndicator(
-                    color: Colors.orange,
+                    color: Color(0xFFEB4531),
                   ));
                 });
             FirebaseAuthorization.signIn(email, password);
@@ -119,7 +112,7 @@ class LoginScreen extends StatelessWidget {
         },
         child: Text(
           "No account? Sign up!",
-          style: GoogleFonts.comfortaa(
+          style: GoogleFonts.russoOne(
               color: Colors.black54, fontSize: 15, fontWeight: FontWeight.w800),
         ));
   }

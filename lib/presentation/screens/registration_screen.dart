@@ -21,29 +21,21 @@ class RegistrationScreen extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.topStart,
       children: [
-        Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/background/backgroundimage_loginpage.jpg'),
-                  fit: BoxFit.cover)),
-        ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: const Color(0xFFF3EBE3),
           body: Container(
             alignment: Alignment.topCenter,
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 100),
             child: Container(
               padding: const EdgeInsets.all(15),
               height: 400,
               width: 330,
               decoration: BoxDecoration(
-                color: Colors.orange,
+                color: const Color(0xFFF3EBE3),
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: Border.all(color: Colors.yellow, width: 2),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.yellow.withOpacity(0.5),
+                    color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 10,
                     offset: const Offset(0, 3),
@@ -98,8 +90,10 @@ class RegistrationScreen extends StatelessWidget {
         },
         child: Text(
           "I already have an account",
-          style: GoogleFonts.comfortaa(
-              color: Colors.black54, fontSize: 15, fontWeight: FontWeight.w800),
+          style: GoogleFonts.russoOne(
+              fontSize: 17,
+              color: Colors.black54,
+              fontWeight: FontWeight.w600),
         ));
   }
 
@@ -107,10 +101,13 @@ class RegistrationScreen extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size.fromHeight(40),
-        backgroundColor: const Color(0xFFF77103),
+        backgroundColor: const Color(0xFFEB4531),
       ),
       child: Text('sign up',
-          style: GoogleFonts.comfortaa(color: Colors.white, fontSize: 20)),
+          style: GoogleFonts.russoOne(
+              fontSize: 25,
+              color: Colors.white,
+              fontWeight: FontWeight.w600)),
       onPressed: () {
         final isValidUsername = _userFormKey.currentState!.validate();
         final isValidEmail = _emailFormKey.currentState!.validate();
@@ -128,7 +125,7 @@ class RegistrationScreen extends StatelessWidget {
               builder: (context) {
                 return const Center(
                     child: CircularProgressIndicator(
-                      color: Colors.orange,
+                      color: Color(0xFFEB4531),
                     ));
               });
           FirebaseAuthorization.signUp(email, password, username);
