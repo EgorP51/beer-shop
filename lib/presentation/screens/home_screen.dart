@@ -1,4 +1,5 @@
 import 'package:craft_store/data/database/database_operations.dart';
+import 'package:craft_store/presentation/screens/shopping_cart_screen.dart';
 import 'package:craft_store/presentation/widgets/card_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import '../../data/models/beer_model.dart';
 import '../../data/services/firebase_authorization.dart';
 import '../widgets/logo.dart';
 
-
 class HomeScreen extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser;
 
@@ -17,51 +17,51 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF3EBE3),
       body: StreamBuilder<List<BeerModel>>(
-        stream: DatabaseOperations.readProductCollection(),
-        builder: (context,snapshot) {
-          if (snapshot.hasData) {
-            late final List<BeerModel> _tempBeerModels = snapshot.data!;
-            return CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  elevation: 0,
-                  iconTheme: const IconThemeData(color: Color(0xFFEB4531),size: 33),
-                  centerTitle: true,
-                  expandedHeight: 170,
-                  pinned: true,
-                  backgroundColor: const Color(0xFFF3EBE3),
-                  flexibleSpace: FlexibleSpaceBar(
+          stream: DatabaseOperations.readProductCollection(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              late final List<BeerModel> tempBeerModels = snapshot.data!;
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    elevation: 0,
+                    iconTheme:
+                        const IconThemeData(color: Color(0xFFEB4531), size: 33),
                     centerTitle: true,
-                    title: Logo(size: 50,color: const Color(0xFF212121),)
-                    ),
+                    expandedHeight: 170,
+                    pinned: true,
+                    backgroundColor: const Color(0xFFF3EBE3),
+                    flexibleSpace: FlexibleSpaceBar(
+                        centerTitle: true,
+                        title: Logo(
+                          size: 50,
+                          color: const Color(0xFF212121),
+                        )),
                   ),
-                _body(_tempBeerModels)
-              ],
-            );
-          }
-          else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          else{
-            return const Center(
-              child:  CircularProgressIndicator(
-                color: Colors.amber,
-              ),
-            );
-          }
-        }
-      ),
+                  _body(tempBeerModels)
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.amber,
+                ),
+              );
+            }
+          }),
       drawer: _drawer(context),
     );
   }
 
-  Widget _body(List<BeerModel> _tempBeerModels) {
+  Widget _body(List<BeerModel> tempBeerModels) {
     return SliverPadding(
       padding: const EdgeInsetsDirectional.all(20),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
-                (context, index) => CardItem(beerModel: _tempBeerModels[index]),
-            childCount: _tempBeerModels.length),
+            (context, index) => CardItem(beerModel: tempBeerModels[index]),
+            childCount: tempBeerModels.length),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 45,
-                    backgroundColor: Color(0xFFEB4531),
+                    backgroundColor: const Color(0xFFEB4531),
                     child: CircleAvatar(
                       radius: 40.0,
                       backgroundImage: NetworkImage(user?.photoURL ??
@@ -105,18 +105,19 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     user!.email!,
                     style: GoogleFonts.russoOne(
-                        fontSize: 15,
-                        color: Colors.white60,),
+                      fontSize: 15,
+                      color: Colors.white60,
+                    ),
                   )
                 ],
               )),
-          _buildMenuItems(),
+          _buildMenuItems(context),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItems() {
+  Widget _buildMenuItems(BuildContext context) {
     return Column(
       children: [
         ListTile(
@@ -140,7 +141,11 @@ class HomeScreen extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.shopping_cart),
           title: const Text('Shopping cart'),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
+            );
+          },
         ),
         const Divider(
           color: Color(0xFF212121),
