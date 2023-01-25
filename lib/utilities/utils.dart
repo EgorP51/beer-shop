@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-class Utils {
+enum SnackBarType { error, success }
 
+class Utils {
   static final messendgerKey = GlobalKey<ScaffoldMessengerState>();
 
-  static showSnackBar(String? text){
-    if(text == null) return;
+  static showSnackBar(String? text, SnackBarType snackBarType) {
+    if (text == null) return;
 
     final snackBar = SnackBar(
-      content: Text(text),
-      backgroundColor: Colors.red,
-    );
+        content: Text(text),
+        backgroundColor:
+            snackBarType == SnackBarType.error ? Colors.red : Colors.green);
 
     messendgerKey.currentState!
       ..removeCurrentSnackBar()
