@@ -8,7 +8,7 @@ class FirebaseAuthorization {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      Utils.showSnackBar(e.message, SnackBarType.error);
     }
   }
 
@@ -24,7 +24,7 @@ class FirebaseAuthorization {
       await user?.updatePhotoURL(
           'https://i.pinimg.com/originals/73/9f/50/739f5047dd55a47d50dd5f27a11c0c29.jpg');
     } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      Utils.showSnackBar(e.message, SnackBarType.error);
     }
   }
 
