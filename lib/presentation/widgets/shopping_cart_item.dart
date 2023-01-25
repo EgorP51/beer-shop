@@ -1,5 +1,6 @@
 import 'package:craft_store/data/models/beer_model.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ShoppingCartItem extends StatelessWidget {
   final BeerModel beer;
@@ -7,13 +8,27 @@ class ShoppingCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(width: 2, color: Colors.black),
-        borderRadius: BorderRadius.circular(20),
+    return Card(
+      elevation: 10,
+      color: const Color.fromARGB(255, 248, 244, 240),
+      child: Container(
+        height: 100,
+        alignment: Alignment.center,
+        child: ListTile(
+          leading: Image.network(
+            beer.img,
+            height: 90,
+          ),
+          title: Text(beer.name,
+              style: GoogleFonts.russoOne(
+                  fontSize: 30,
+                  color: const Color(0xFFEB4531),
+                  fontWeight: FontWeight.w500)),
+          subtitle: Text('${beer.price}₴',
+              style: GoogleFonts.russoOne(
+                  fontSize: 20, fontWeight: FontWeight.w500)),
+        ),
       ),
-      leading: Image.network(beer.img),
-      title: Text(beer.name),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:craft_store/utilities/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/beer_model.dart';
@@ -7,8 +8,13 @@ class BeerNotifier extends ChangeNotifier {
 
   List<BeerModel> get beersModels => _beerModels;
 
-  void addToShoppingCart(BeerModel beer) {
-    _beerModels.add(beer);
+  bool addToShoppingCart(BeerModel beer) {
+    if (!_beerModels.contains(beer)) {
+      _beerModels.add(beer);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void removeFromShoppingCart(BeerModel beer) {
