@@ -32,16 +32,67 @@ class ShoppingCartScreen extends StatelessWidget {
                       fontSize: 30,
                       fontWeight: FontWeight.w600)),
             )
-          : Container(
-              padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                itemCount: beerNotifier.beersModels.length,
-                itemBuilder: (context, index) {
-                  return ShoppingCartItem(
-                      beer: beerNotifier.beersModels[index]);
-                },
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    child: ListView.builder(
+                      itemCount: beerNotifier.beersModels.length,
+                      itemBuilder: (context, index) {
+                        return ShoppingCartItem(
+                            beer: beerNotifier.beersModels[index]);
+                      },
+                    ),
+                  ),
+                  _totalCount(context),
+                  const SizedBox(height: 10),
+                  _orderButton(),
+                ],
               ),
             ),
     );
+  }
+
+  Widget _totalCount(BuildContext context) {
+    var beerNotifier = Provider.of<BeerNotifier>(context);
+    return Container(
+      height: 70,
+      alignment: Alignment.center,
+      color: const Color.fromARGB(255, 225, 210, 196),
+      child: Text(
+        'Total count: ${beerNotifier.totalCount}',
+        style: GoogleFonts.russoOne(
+            fontSize: 30, color: Colors.black54, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  Widget _orderButton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(70),
+          backgroundColor: const Color(0xFFEB4531),
+        ),
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Order now ',
+              style: GoogleFonts.russoOne(
+                  fontSize: 30,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500),
+            ),
+            const Icon(
+              Icons.shopping_cart_rounded,
+              color: Colors.black54,
+              size: 30,
+            )
+          ],
+        ));
   }
 }
