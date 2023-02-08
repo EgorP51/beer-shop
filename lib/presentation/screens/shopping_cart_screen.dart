@@ -49,7 +49,7 @@ class ShoppingCartScreen extends StatelessWidget {
                   ),
                   _totalCount(context),
                   const SizedBox(height: 10),
-                  _orderButton(),
+                  _orderButton(context),
                 ],
               ),
             ),
@@ -63,34 +63,37 @@ class ShoppingCartScreen extends StatelessWidget {
       alignment: Alignment.center,
       color: const Color.fromARGB(255, 225, 210, 196),
       child: Text(
-        'Total count: ${beerNotifier.totalCount}',
+        'Total price: ${beerNotifier.totalCount}',
         style: GoogleFonts.russoOne(
-            fontSize: 30, color: Colors.black54, fontWeight: FontWeight.w500),
+            fontSize: 25, color: Colors.black54, fontWeight: FontWeight.w500),
       ),
     );
   }
 
-  Widget _orderButton() {
+  Widget _orderButton(BuildContext context) {
+    var beerNotifier = Provider.of<BeerNotifier>(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(70),
           backgroundColor: const Color(0xFFEB4531),
         ),
-        onPressed: () {},
+        onPressed: () {
+          beerNotifier.sendOrderForProcessing();
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Order now ',
               style: GoogleFonts.russoOne(
-                  fontSize: 30,
+                  fontSize: 25,
                   color: Colors.black54,
                   fontWeight: FontWeight.w500),
             ),
             const Icon(
               Icons.shopping_cart_rounded,
               color: Colors.black54,
-              size: 30,
+              size: 25,
             )
           ],
         ));

@@ -15,6 +15,7 @@ class ShoppingCartItem extends StatelessWidget {
         elevation: 10,
         color: const Color.fromARGB(255, 248, 244, 240),
         child: Container(
+          padding: const EdgeInsets.only(left: 13),
           height: 100,
           alignment: Alignment.center,
           child: ListTile(
@@ -27,7 +28,7 @@ class ShoppingCartItem extends StatelessWidget {
                 child: Text(
                   beer.name,
                   style: GoogleFonts.russoOne(
-                      fontSize: 30,
+                      fontSize: 25,
                       color: const Color(0xFFEB4531),
                       fontWeight: FontWeight.w500),
                   overflow: TextOverflow.ellipsis,

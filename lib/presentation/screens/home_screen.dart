@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
                     pinned: true,
                     backgroundColor: const Color(0xFFF3EBE3),
                     flexibleSpace: FlexibleSpaceBar(
+                        titlePadding: const EdgeInsets.only(top: 10),
                         centerTitle: true,
                         title: Logo(
                           size: 50,
