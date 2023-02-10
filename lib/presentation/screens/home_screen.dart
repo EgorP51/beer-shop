@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../data/models/beer_model.dart';
 import '../../data/services/firebase_authorization.dart';
 import '../widgets/logo.dart';
+import 'order_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser;
@@ -133,7 +134,11 @@ class HomeScreen extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.app_registration_outlined),
           title: const Text('My orders'),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => OrderScreen()),
+            );
+          },
         ),
         const Divider(
           color: Color(0xFF212121),
@@ -144,7 +149,8 @@ class HomeScreen extends StatelessWidget {
           title: const Text('Shopping cart'),
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => ShoppingCartScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const ShoppingCartScreen()),
             );
           },
         ),

@@ -11,38 +11,53 @@ class ShoppingCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 10,
-        color: const Color.fromARGB(255, 248, 244, 240),
-        child: Container(
-          padding: const EdgeInsets.only(left: 13),
-          height: 100,
-          alignment: Alignment.center,
-          child: ListTile(
-              leading: Image.network(
-                beer.img,
-                height: 90,
-              ),
-              title: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  beer.name,
-                  style: GoogleFonts.russoOne(
-                      fontSize: 25,
-                      color: const Color(0xFFEB4531),
-                      fontWeight: FontWeight.w500),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              subtitle: Text('${beer.price}₴',
-                  style: GoogleFonts.russoOne(
-                      fontSize: 20, fontWeight: FontWeight.w500)),
-              trailing: _counter(context)),
-        ));
+    var beerNotifier = Provider.of<BeerNotifier>(context);
+    return Dismissible(
+        key: UniqueKey(),
+        direction: DismissDirection.horizontal,
+        onDismissed: (_) {
+          beerNotifier.removeFromShoppingCart(beer);
+        },
+        background: Container(
+          color: Colors.red,
+          margin: const EdgeInsets.symmetric(horizontal: 15),
+          alignment: Alignment.centerRight,
+          child: const Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+        ),
+        child: Card(
+            elevation: 10,
+            color: const Color.fromARGB(255, 248, 244, 240),
+            child: Container(
+              padding: const EdgeInsets.only(left: 13),
+              height: 100,
+              alignment: Alignment.center,
+              child: ListTile(
+                  leading: Image.network(
+                    beer.img,
+                    height: 90,
+                  ),
+                  title: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      beer.name,
+                      style: GoogleFonts.russoOne(
+                          fontSize: 25,
+                          color: const Color(0xFFEB4531),
+                          fontWeight: FontWeight.w500),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  subtitle: Text('${beer.price}₴',
+                      style: GoogleFonts.russoOne(
+                          fontSize: 20, fontWeight: FontWeight.w500)),
+                  trailing: _counter(beerNotifier)),
+            )));
   }
 
-  Widget _counter(BuildContext context) {
-    var beerNotifier = Provider.of<BeerNotifier>(context);
+  Widget _counter(BeerNotifier beerNotifier) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

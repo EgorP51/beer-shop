@@ -20,4 +20,11 @@ class DatabaseOperations {
     final json = order.toJson();
     await orderDoc.set(json);
   }
+
+  static Stream<List<OrderModel>> readOrderCollection() {
+    return FirebaseFirestore.instance.collection('orders').snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => OrderModel.fromJson(doc.data()))
+            .toList());
+  }
 }

@@ -8,7 +8,7 @@ import '../../data/models/beer_model.dart';
 class BeerNotifier extends ChangeNotifier {
   final List<BeerModel> _beerModels = [];
   final user = FirebaseAuth.instance.currentUser;
-  final _itemCount = {};
+  final Map<BeerModel, int> _itemCount = {};
   int _totalPrice = 0;
 
   List<BeerModel> get beersModels => _beerModels;
@@ -26,28 +26,28 @@ class BeerNotifier extends ChangeNotifier {
     }
   }
 
+  void removeFromShoppingCart(BeerModel beer) {
+    _beerModels.remove(beer);
+    _totalPrice -= _itemCount[beer]!;
+    notifyListeners();
+  }
+
   void addItem(BeerModel beer) {
-    _itemCount[beer] += int.parse(beer.price);
+    _itemCount[beer] = _itemCount[beer]! + int.parse(beer.price);
     _totalPrice += int.parse(beer.price);
     notifyListeners();
   }
 
   void removeItem(BeerModel beer) {
-    if (_itemCount[beer] > int.parse(beer.price)) {
-      _itemCount[beer] -= int.parse(beer.price);
+    if (_itemCount[beer]! > int.parse(beer.price)) {
+      _itemCount[beer] = _itemCount[beer]! - int.parse(beer.price);
       _totalPrice -= int.parse(beer.price);
     }
     notifyListeners();
   }
 
   int oneBeerTypeCount(BeerModel beer) =>
-      (_itemCount[beer] / int.parse(beer.price)).toInt();
-
-  void removeFromShoppingCart(BeerModel beer) {
-    _beerModels.remove(beer);
-    _totalPrice += int.parse(beer.price);
-    notifyListeners();
-  }
+      _itemCount[beer]! ~/ int.parse(beer.price);
 
   void sendOrderForProcessing() {
     final List<BeerOrderModel> orderList = [];
