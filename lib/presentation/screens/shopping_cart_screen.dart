@@ -1,5 +1,6 @@
 import 'package:craft_store/presentation/provider/beer_notifier.dart';
 import 'package:craft_store/presentation/widgets/shopping_cart_item.dart';
+import 'package:craft_store/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,6 @@ class ShoppingCartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var beerNotifier = Provider.of<BeerNotifier>(context);
-
     return Scaffold(
       backgroundColor: const Color(0xFFF3EBE3),
       appBar: AppBar(
@@ -79,6 +79,7 @@ class ShoppingCartScreen extends StatelessWidget {
         ),
         onPressed: () {
           beerNotifier.sendOrderForProcessing();
+          Utils.showSnackBar('Order sent for processing', SnackBarType.success);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
