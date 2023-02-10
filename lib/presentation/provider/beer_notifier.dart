@@ -1,5 +1,7 @@
 import 'package:craft_store/data/database/database_operations.dart';
 import 'package:craft_store/data/models/order_model.dart';
+import 'package:craft_store/data/services/email_sender.dart';
+import 'package:craft_store/utilities/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -51,10 +53,25 @@ class BeerNotifier extends ChangeNotifier {
 
   void sendOrderForProcessing() {
     final List<BeerOrderModel> orderList = [];
+
     for (BeerModel beer in _beerModels) {
       orderList.add(BeerOrderModel(beer.name, oneBeerTypeCount(beer)));
     }
     DatabaseOperations.writeOrderToDB(user!.uid, orderList, _totalPrice);
+
+    var message =
+        'Username: ${user!.displayName},\nUser id: ${user!.uid},\nTotal price: $_totalPrice,\nItems: ';
+    for (BeerOrderModel beerOrderModel in orderList) {
+      message +=
+          '${beerOrderModel.beerName} (${beerOrderModel.bottlesNumber} bottles)\n';
+    }
+
+    EmailSender.sendEmail(
+        name: user!.displayName!,
+        email: user!.email!,
+        subject: 'FucksMan, new order!',
+        message: message);
+    Utils.showSnackBar('Order sent for processing', SnackBarType.success);
 
     _beerModels.clear();
     _itemCount.clear();

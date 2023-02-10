@@ -20,6 +20,15 @@ class OrderModel {
         'order': order.map((e) => e.toJson()).toList(),
         'totalPrice': totalPrice
       };
+  @override
+  String toString() {
+    var text = 'Order id: $orderId,\nTotal price: $totalPrice,\nItems: ';
+    for (BeerOrderModel beerOrderModel in order) {
+      text +=
+          '${beerOrderModel.beerName} (${beerOrderModel.bottlesNumber} bottles)\n';
+    }
+    return text;
+  }
 }
 
 class BeerOrderModel {

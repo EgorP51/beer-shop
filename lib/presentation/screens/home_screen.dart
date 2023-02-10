@@ -12,6 +12,7 @@ import 'order_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser;
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
