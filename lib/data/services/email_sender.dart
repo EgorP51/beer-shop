@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class EmailSender {
@@ -14,7 +13,7 @@ class EmailSender {
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
 
-    final response = await http.post(url,
+    await http.post(url,
         headers: {
           'origin': 'http://localhost',
           'Content-Type': 'application/json'
@@ -29,7 +28,5 @@ class EmailSender {
             'message': message
           }
         }));
-    print(response.body.toString() +
-        '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   }
 }

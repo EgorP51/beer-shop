@@ -6,15 +6,15 @@ import '../../main.dart';
 import '../widgets/input_text.dart';
 import 'login_screen.dart';
 
-
 class RegistrationScreen extends StatelessWidget {
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _userFormKey = GlobalKey<FormState>();
   final _emailFormKey = GlobalKey<FormState>();
   final _passwordFormKey = GlobalKey<FormState>();
+
+  RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,9 @@ class RegistrationScreen extends StatelessWidget {
                       validation: Validation.password,
                       formKey: _passwordFormKey),
                   _goToLoginScreen(context),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
                   _returnButton(context)
                 ],
               ),
@@ -78,7 +80,7 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-  Widget _goToLoginScreen(BuildContext context){
+  Widget _goToLoginScreen(BuildContext context) {
     //I already have an account
     return GestureDetector(
         onTap: () {
@@ -91,9 +93,7 @@ class RegistrationScreen extends StatelessWidget {
         child: Text(
           "I already have an account",
           style: GoogleFonts.russoOne(
-              fontSize: 17,
-              color: Colors.black54,
-              fontWeight: FontWeight.w600),
+              fontSize: 17, color: Colors.black54, fontWeight: FontWeight.w600),
         ));
   }
 
@@ -105,16 +105,13 @@ class RegistrationScreen extends StatelessWidget {
       ),
       child: Text('sign up',
           style: GoogleFonts.russoOne(
-              fontSize: 25,
-              color: Colors.white,
-              fontWeight: FontWeight.w600)),
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.w600)),
       onPressed: () {
         final isValidUsername = _userFormKey.currentState!.validate();
         final isValidEmail = _emailFormKey.currentState!.validate();
         final isValidPassword = _passwordFormKey.currentState!.validate();
 
         if (isValidUsername && isValidEmail && isValidPassword) {
-
           var username = _usernameController.text.trim();
           var email = _emailController.text.trim();
           var password = _passwordController.text.trim();
@@ -125,8 +122,8 @@ class RegistrationScreen extends StatelessWidget {
               builder: (context) {
                 return const Center(
                     child: CircularProgressIndicator(
-                      color: Color(0xFFEB4531),
-                    ));
+                  color: Color(0xFFEB4531),
+                ));
               });
           FirebaseAuthorization.signUp(email, password, username);
           navigatorKey.currentState!.popUntil((route) => route.isFirst);

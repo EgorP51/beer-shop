@@ -1,4 +1,5 @@
 import 'package:craft_store/main.dart';
+import 'package:craft_store/presentation/constants.dart';
 import 'package:craft_store/presentation/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,18 +8,18 @@ import '../../data/services/firebase_authorization.dart';
 import '../widgets/input_text.dart';
 import '../widgets/logo.dart';
 
-
 class LoginScreen extends StatelessWidget {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _emailFormKey = GlobalKey<FormState>();
   final _passwordFormKey = GlobalKey<FormState>();
 
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EBE3),
+      backgroundColor: Constants.lightAppColor,
       body: Container(
         alignment: Alignment.topCenter,
         padding: const EdgeInsets.only(top: 100),
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
           height: 400,
           width: 330,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3EBE3),
+            color: Constants.lightAppColor,
             borderRadius: const BorderRadius.all(Radius.circular(20)),
             boxShadow: [
               BoxShadow(
@@ -43,7 +44,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               Logo(
                 size: 60,
-                color: const Color(0xFF212121),
+                color: Constants.darkAppColor,
               ),
               InputText(
                   controller: _emailController,
@@ -72,7 +73,7 @@ class LoginScreen extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(40),
-          backgroundColor: const Color(0xFFEB4531),
+          backgroundColor: Constants.redAppColor,
         ),
         child: Text('sign in',
             style: GoogleFonts.russoOne(
@@ -92,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                 builder: (context) {
                   return const Center(
                       child: CircularProgressIndicator(
-                    color: Color(0xFFEB4531),
+                    color: Constants.redAppColor,
                   ));
                 });
             FirebaseAuthorization.signIn(email, password);

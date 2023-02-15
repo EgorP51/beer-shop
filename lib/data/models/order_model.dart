@@ -20,6 +20,7 @@ class OrderModel {
         'order': order.map((e) => e.toJson()).toList(),
         'totalPrice': totalPrice
       };
+
   @override
   String toString() {
     var text = 'Order id: $orderId,\nTotal price: $totalPrice,\nItems: ';

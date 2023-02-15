@@ -1,5 +1,6 @@
 import 'package:craft_store/data/database/database_operations.dart';
 import 'package:craft_store/data/models/order_model.dart';
+import 'package:craft_store/presentation/constants.dart';
 import 'package:craft_store/presentation/widgets/order_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +13,14 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EBE3),
+      backgroundColor: Constants.lightAppColor,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Color(0xFFEB4531), size: 33),
+        iconTheme: Constants.iconTheme,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text('Orders',
             style: GoogleFonts.grenzeGotisch(
-                color: const Color(0xFF212121),
+                color: Constants.darkAppColor,
                 fontSize: 30,
                 fontWeight: FontWeight.w600)),
         elevation: 0,
@@ -55,7 +56,7 @@ class OrderScreen extends StatelessWidget {
             } else {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: Colors.amber,
+                  color: Constants.redAppColor,
                 ),
               );
             }

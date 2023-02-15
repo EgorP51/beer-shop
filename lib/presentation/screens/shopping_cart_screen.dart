@@ -1,6 +1,7 @@
+import 'package:craft_store/presentation/constants.dart';
 import 'package:craft_store/presentation/provider/beer_notifier.dart';
 import 'package:craft_store/presentation/widgets/shopping_cart_item.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:craft_store/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,25 @@ class ShoppingCartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var beerNotifier = Provider.of<BeerNotifier>(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EBE3),
+      backgroundColor: Constants.lightAppColor,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Color(0xFFEB4531), size: 33),
+        iconTheme: Constants.iconTheme,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text('Shopping Cart',
             style: GoogleFonts.grenzeGotisch(
-                color: const Color(0xFF212121),
+                color: Constants.darkAppColor,
                 fontSize: 30,
                 fontWeight: FontWeight.w600)),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.more_vert,),
+            onPressed: () {
+              Utils.showToast(text: 'Swipe an item to remove it from the cart');
+            },
+          )
+        ],
       ),
       body: beerNotifier.beersModels.isEmpty
           ? Center(
@@ -75,7 +84,7 @@ class ShoppingCartScreen extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(70),
-          backgroundColor: const Color(0xFFEB4531),
+          backgroundColor: Constants.redAppColor,
         ),
         onPressed: () {
           beerNotifier.sendOrderForProcessing();

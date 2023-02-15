@@ -71,7 +71,8 @@ class BeerNotifier extends ChangeNotifier {
         email: user!.email!,
         subject: 'FucksMan, new order!',
         message: message);
-    Utils.showSnackBar('Order sent for processing', SnackBarType.success);
+    Utils.showSnackBar(
+        text: 'Order sent for processing', snackBarType: SnackBarType.success);
 
     _beerModels.clear();
     _itemCount.clear();

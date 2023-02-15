@@ -12,7 +12,8 @@ class InputText extends StatelessWidget {
   late final GlobalKey _formKey;
 
   InputText(
-      {required controller,
+      {super.key,
+      required controller,
       required hintText,
       required icon,
       required obscure,
@@ -35,12 +36,13 @@ class InputText extends StatelessWidget {
         controller: _controller,
         obscureText: _obscure,
         style: GoogleFonts.russoOne(
-            color: Color(0xBB212121), fontSize: 20, fontWeight: FontWeight.w900),
+            color: const Color(0xBB212121),
+            fontSize: 20,
+            fontWeight: FontWeight.w900),
         decoration: InputDecoration(
-            hintStyle:
-            GoogleFonts.russoOne(
+            hintStyle: GoogleFonts.russoOne(
                 fontSize: 22,
-                color: Color(0xBB212121),
+                color: const Color(0xBB212121),
                 fontWeight: FontWeight.w400),
             hintText: _hintText,
             prefixIcon: Padding(
@@ -68,16 +70,16 @@ class InputText extends StatelessWidget {
             }
           } else if (_validation == Validation.password && value != null) {
             final bool passwordValid = RegExp(
-                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$')
                 .hasMatch(value);
 
             if (value.isNotEmpty &&
                 passwordValid &&
-                value.length > 8 &&
+                value.length >= 6 &&
                 value.length < 15) {
               return null;
             } else {
-              return 'invalid password';
+              return 'password must contain\nsix or more characters, one letter and one number';
             }
           } else if (_validation == Validation.username && value != null) {
             if (value.isNotEmpty && value.length >= 2 && value.length < 20) {

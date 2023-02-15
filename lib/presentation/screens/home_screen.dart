@@ -1,6 +1,9 @@
 import 'package:craft_store/data/database/database_operations.dart';
+import 'package:craft_store/presentation/constants.dart';
+import 'package:craft_store/presentation/screens/about_us_screen.dart';
 import 'package:craft_store/presentation/screens/shopping_cart_screen.dart';
 import 'package:craft_store/presentation/widgets/card_item.dart';
+import 'package:craft_store/utilities/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +20,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EBE3),
+      backgroundColor: Constants.lightAppColor,
       body: StreamBuilder<List<BeerModel>>(
           stream: DatabaseOperations.readProductCollection(),
           builder: (context, snapshot) {
@@ -27,18 +30,17 @@ class HomeScreen extends StatelessWidget {
                 slivers: [
                   SliverAppBar(
                     elevation: 0,
-                    iconTheme:
-                        const IconThemeData(color: Color(0xFFEB4531), size: 33),
+                    iconTheme: Constants.iconTheme,
                     centerTitle: true,
-                    expandedHeight: 170,
+                    expandedHeight: 150,
                     pinned: true,
-                    backgroundColor: const Color(0xFFF3EBE3),
+                    backgroundColor: Constants.lightAppColor,
                     flexibleSpace: FlexibleSpaceBar(
                         titlePadding: const EdgeInsets.only(top: 10),
                         centerTitle: true,
                         title: Logo(
                           size: 50,
-                          color: const Color(0xFF212121),
+                          color: Constants.darkAppColor,
                         )),
                   ),
                   _body(tempBeerModels)
@@ -49,7 +51,7 @@ class HomeScreen extends StatelessWidget {
             } else {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: Colors.amber,
+                  color: Constants.redAppColor,
                 ),
               );
             }
@@ -76,7 +78,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _drawer(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFFF3EBE3),
+      backgroundColor: Constants.lightAppColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -84,22 +86,28 @@ class HomeScreen extends StatelessWidget {
               padding: MediaQuery.of(context).padding,
               height: 200,
               width: MediaQuery.of(context).size.width,
-              color: const Color(0xFF212121),
+              color: Constants.darkAppColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CircleAvatar(
                     radius: 45,
-                    backgroundColor: const Color(0xFFEB4531),
-                    child: CircleAvatar(
-                      radius: 40.0,
-                      backgroundImage: NetworkImage(user?.photoURL ??
-                          'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=2000'),
-                      backgroundColor: Colors.transparent,
+                    backgroundColor: Constants.redAppColor,
+                    child: InkWell(
+                      onTap: () {
+                        Utils.showToast(
+                            text: 'Photo change is currently not available');
+                      },
+                      child: const CircleAvatar(
+                        radius: 40.0,
+                        backgroundImage: NetworkImage(
+                            'https://i.pinimg.com/originals/73/9f/50/739f5047dd55a47d50dd5f27a11c0c29.jpg'),
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                   ),
                   Text(
-                    user!.displayName ?? 'username == null',
+                    user!.displayName ?? user!.email!.split("@").first,
                     style: GoogleFonts.russoOne(
                         fontSize: 30,
                         color: Colors.white70,
@@ -124,15 +132,6 @@ class HomeScreen extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: const Icon(Icons.settings),
-          title: const Text('Settings'),
-          onTap: () {},
-        ),
-        const Divider(
-          color: Color(0xFF212121),
-          height: 20,
-        ),
-        ListTile(
           leading: const Icon(Icons.app_registration_outlined),
           title: const Text('My orders'),
           onTap: () {
@@ -142,7 +141,7 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Divider(
-          color: Color(0xFF212121),
+          color: Constants.darkAppColor,
           height: 20,
         ),
         ListTile(
@@ -156,16 +155,20 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Divider(
-          color: Color(0xFF212121),
+          color: Constants.darkAppColor,
           height: 20,
         ),
         ListTile(
           leading: const Icon(Icons.info),
           title: const Text('More about us'),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AboutUsScreen()),
+            );
+          },
         ),
         const Divider(
-          color: Color(0xFF212121),
+          color: Constants.darkAppColor,
           height: 20,
         ),
         ListTile(
@@ -176,7 +179,7 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         const Divider(
-          color: Color(0xFF212121),
+          color: Constants.darkAppColor,
           height: 20,
         ),
       ],
